@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">JARVIS</string>
+    <string name="greet">Hello</string>
+    <string name="app_desc">Just Another </string>
+    <string name="title_activity_user_setting">UserSetting</string>
+    <string name="Done">Done</string>
+    <string name="say_bye">bye shail</string>
+    <string name="title_activity_add_script">add_script</string>
+    <string name="speech_prompt">Tell me sir</string>
+    <string name="title_activity_take_command">TakeCommand</string>
+</resources>

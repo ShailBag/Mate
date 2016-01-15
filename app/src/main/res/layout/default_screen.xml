@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/backcolor"
+    android:weightSum="1" android:orientation="vertical" >
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mateStart"
+        android:src="@drawable/enable"
+        android:onClick="onMateStartClick"/>
+
+    <EditText
+        android:layout_width="336dp"
+        android:layout_height="203dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/MateMessage"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.90" />
+</LinearLayout>
