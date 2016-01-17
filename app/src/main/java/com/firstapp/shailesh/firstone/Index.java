@@ -189,7 +189,8 @@ public class Index extends AppCompatActivity implements TextToSpeech.OnInitListe
             String scriptPrice = jsonObj5.getString("price");
             String scriptDayHigh = jsonObj5.getString("day_high");
             String scriptDayLow = jsonObj5.getString("day_low");
-            Script scriptObj = new Script(scriptName,scriptPrice,scriptDayHigh,scriptDayLow);
+            String change = jsonObj5.getString("change");
+            Script scriptObj = new Script(scriptName,scriptPrice,scriptDayHigh,scriptDayLow,change);
             message.setText(scriptObj.getScriptName());
             String scriptMessage = "Sir " + "price of " + scriptObj.getScriptName() + " is " + scriptObj.getPrice();
             Speakup(scriptMessage);

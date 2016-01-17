@@ -8,12 +8,14 @@ public class Script {
     private String Price;
     private String DayHigh;
     private String DayLow;
+    public String Change;
 
-    public Script(String scriptName,String price,String dayHigh,String dayLow){
+    public Script(String scriptName,String price,String dayHigh,String dayLow,String change){
         ScriptName = scriptName;
         Price = price;
         DayHigh = dayHigh;
         DayLow = dayLow;
+        Change = change;
     }
 
     public String getScriptName(){

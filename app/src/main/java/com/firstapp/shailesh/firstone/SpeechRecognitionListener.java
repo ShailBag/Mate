@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -13,13 +14,18 @@ import java.util.ArrayList;
 public class SpeechRecognitionListener implements RecognitionListener
 {
     private SpeechRecognizer mSpeechRecognizer;
-    private boolean mIslistening;
+    private boolean mateIslistening;
     private Intent mSpeechRecognizerIntent;
+    private boolean isOperationComplete;
+    private String data;
     @Override
     public void onBeginningOfSpeech()
     {
-        //Log.d(TAG, "onBeginingOfSpeech");
-        mIslistening = true;
+        mateIslistening = true;
+    }
+
+    public boolean isMateListing(){
+        return mateIslistening;
     }
 
     @Override
@@ -32,7 +38,7 @@ public class SpeechRecognitionListener implements RecognitionListener
     public void onEndOfSpeech()
     {
         //Log.d(TAG, "onEndOfSpeech");
-        mIslistening = false;
+        mateIslistening = false;
     }
 
     @Override
@@ -59,7 +65,6 @@ public class SpeechRecognitionListener implements RecognitionListener
     public void onReadyForSpeech(Bundle params)
     {
         //Log.d(TAG, "onReadyForSpeech"); //$NON-NLS-1$
-        String some = "ready for instructions";
     }
 
     @Override
@@ -67,6 +72,8 @@ public class SpeechRecognitionListener implements RecognitionListener
     {
         //Log.d(TAG, "onResults"); //$NON-NLS-1$
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        data = matches.get(0).toString();
+        isOperationComplete = true;
         //message.setText(matches.get(0).toString());
         // matches are the return values of speech recognition engine
         // Use these values for whatever you wish to do
@@ -75,5 +82,14 @@ public class SpeechRecognitionListener implements RecognitionListener
     @Override
     public void onRmsChanged(float rmsdB)
     {
+    }
+
+    public boolean isRecognitionComplete()
+    {
+        return isOperationComplete;
+    }
+    public String command()
+    {
+        return data;
     }
 }

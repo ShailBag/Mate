@@ -4,11 +4,11 @@
     android:weightSum="1" android:orientation="vertical" >
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="77dp"
+        android:layout_height="74dp"
         android:id="@+id/mateStart"
         android:src="@drawable/enable"
-        android:onClick="onMateStartClick"/>
+        android:onClick="onMateStartButtonClick"/>
 
     <EditText
         android:layout_width="336dp"

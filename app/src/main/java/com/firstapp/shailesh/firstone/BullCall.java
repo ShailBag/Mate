@@ -1,6 +1,7 @@
 package com.firstapp.shailesh.firstone;
 
 import android.os.AsyncTask;
+import android.speech.RecognitionListener;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -16,7 +17,7 @@ import java.net.URL;
  * Created by _SHAILESH on 1/7/2016.
  */
 
-public class BullCall extends AsyncTask<String,String, String> {
+public class BullCall extends AsyncTask<String,String, String>  {
 
     public IBullCallResponse delegate = null;
     @Override
