@@ -8,4 +8,15 @@
     <string name="title_activity_add_script">add_script</string>
     <string name="speech_prompt">Tell me sir</string>
     <string name="title_activity_take_command">TakeCommand</string>
+    <string name="command1">stop assigned task</string>
+    <string name="command2">stop repeating</string>
+    <string name="command3">stop conversation</string>
+    <string name="command4">go to sleep</string>
+    <string name="command5">keep telling me</string>
+    <string name="command6">keep informing me</string>
+    <string name="command7">keep me informed</string>
+    <string name="command8">market today</string>
+    <string name="command9">share price</string>
+    <string name="command10">nifty</string>
+    <string name="command11">sensex</string>
 </resources>

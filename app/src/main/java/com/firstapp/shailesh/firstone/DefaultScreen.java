@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * Created by shailesh.bagade on 1/14/2016.
@@ -38,6 +39,7 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
     boolean isRepeatTaskAssigned = false;
     String repeatTaskName= null;
     boolean isSpeakingNow =false;
+    boolean isSpeechRecongnitionInitialed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,6 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
         setContentView(R.layout.default_screen);
         //initialize speak ability
         textToSpeech= new TextToSpeech(this,this);
-        //initialize listening ability
-        initializeSpeechRecognition();
         registerReapeatTask();
     }
 
@@ -57,7 +57,7 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
         mateHandlerTask = new Runnable() {
             @Override
             public void run() {
-                startConversation();
+                //startConversation();
                 repeatTask();
                 handler.postDelayed(this, interval);
             }
@@ -67,7 +67,8 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
 
     private void startConversation()
     {
-        takeCommand();
+        if(isSpeechRecongnitionInitialed)
+            takeCommand();
     }
 
     private void stopConversation()
@@ -85,12 +86,18 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
     //Application Start event
     public void onMateStartButtonClick(View v)
     {
+        if(!isSpeechRecongnitionInitialed)
+        {
+            //initialize listening ability
+            initializeSpeechRecognition();
+            isSpeechRecongnitionInitialed = true;
+        }
         if(!playedStartupUpMessage)
         {
             speakUp(greetMessage());
             playedStartupUpMessage =true;
-
         }
+
         EditText MateMessage =(EditText)findViewById(R.id.MateMessage);
         identifyAndExecuteCommand(MateMessage.getText().toString());
         takeCommand();
@@ -138,15 +145,16 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
         textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null);
         int messageLength = message.length();
         try{
-            Thread.sleep(2500);}
+            Thread.sleep(4000);
+            isSpeakingNow =false;
+            takeCommand();
+        }
         catch(Exception e){
         }
-        isSpeakingNow =false;
     }
 
     private String greetMessage()
     {
-        //String currentDate = DateFormat.getDateTimeInstance().format(new Date());
         Calendar c = Calendar.getInstance();
         String greet = "";
 
@@ -157,7 +165,11 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
             greet = "Good afternoon sir";
         else
             greet = "Good evening sir";
-        greet += " how may I assist you?";
+
+        Random random = new Random();
+        int randomNum = random.nextInt(3);
+        String[] greetMessages = {"how may I assist you?","How can I help you?"," what is up?"};
+        greet += greetMessages[randomNum];
         return greet;
     }
 
@@ -185,7 +197,6 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
         super.onActivityResult(requestCode, resultCode, data);
 
         EditText MateMessage =(EditText)findViewById(R.id.MateMessage);
-        speakUp("This is on Actiivity Result event");
         switch (requestCode)
         {
             case REQ_CODE_SPEECH_INPUT: {
@@ -204,6 +215,12 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
             return;
         command = command.toLowerCase();
 
+        EditText MateMessage =(EditText)findViewById(R.id.MateMessage);
+        if(command.contains("clear screen"))
+        {
+            MateMessage.setText("");
+        }
+
         if(command.contains("stop assigned task") || command.contains("stop repeating"))
         {
             isRepeatTaskAssigned = false;
@@ -217,12 +234,15 @@ public class DefaultScreen extends AppCompatActivity implements TextToSpeech.OnI
         String repeatCommand1 ="keep telling me";
         String repeatCommand2 ="keep informing me";
         String repeatCommand3 ="keep me informed";
-        if(command.contains(repeatCommand1) || command.contains(repeatCommand2)|| command.contains(repeatCommand3))
+        String repeatCommand4 ="keep me updated";
+        if(command.contains(repeatCommand1) || command.contains(repeatCommand2)|| command.contains(repeatCommand3)
+                ||command.contains(repeatCommand4))
         {
             String repeatCommand;
             repeatCommand = command.replace(repeatCommand1,"");
             repeatCommand = command.replace(repeatCommand2,"");
             repeatCommand = command.replace(repeatCommand3,"");
+            repeatCommand = command.replace(repeatCommand4,"");
             repeatCommand = command.replace("about","");
             repeatCommand = command.replace("on","");
 
